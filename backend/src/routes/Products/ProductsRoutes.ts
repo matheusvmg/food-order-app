@@ -2,8 +2,8 @@ import { Express } from "express";
 import {
   IProductsController,
   ProductsController,
-} from "../controller/ProductsController";
-import { IRoutes } from "../Server";
+} from "../../controller/Products/ProductsController";
+import { IRoutes } from "../../Server";
 
 interface IProductsRoutes extends IRoutes {
   controller: IProductsController;

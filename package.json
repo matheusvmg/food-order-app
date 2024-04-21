@@ -1,10 +1,11 @@
 {
-  "name": "FoodOrderApp",
+  "name": "food-order-app",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "docker:clean": "docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q)",
     "docker:up": "docker-compose -f docker-compose.yml up -d",
+    "docker:clean:volumes": "docker-compose down --volumes",
     "docker:clean:up": "yarn docker:clean && yarn docker:up"
   },
   "license": "MIT"

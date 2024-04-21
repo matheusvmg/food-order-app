@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
-import { ProductsService, IProductsService } from "../service/ProductService";
+import {
+  ProductsService,
+  IProductsService,
+} from "../../service/Products/ProductService";
 
 interface IProductsController {
   getProducts(request: Request, response: Response): Promise<void>;
@@ -9,18 +12,18 @@ interface IProductsController {
 }
 
 class ProductsController implements IProductsController {
-  productsService: IProductsService;
+  service: IProductsService;
 
   constructor(productsService = new ProductsService()) {
-    this.productsService = productsService;
+    this.service = productsService;
   }
 
   getProducts = async (
     _request: Request,
-    response: Response,
+    response: Response
   ): Promise<void> => {
     try {
-      let products = await this.productsService.getProducts();
+      let products = await this.service.getProducts();
       response.status(200).json({ products });
     } catch (e) {
       console.error(e);
@@ -30,15 +33,15 @@ class ProductsController implements IProductsController {
 
   insertProduct = async (
     request: Request,
-    response: Response,
+    response: Response
   ): Promise<void> => {
     try {
       const { name, description, price, qtd } = request.body;
-      const product = await this.productsService.insertProduct(
+      const product = await this.service.insertProduct(
         name,
         price,
         qtd,
-        description,
+        description
       );
       response.status(200).json({ message: "Product inserted!", product });
     } catch (e) {
@@ -49,11 +52,11 @@ class ProductsController implements IProductsController {
 
   deleteProduct = async (
     request: Request,
-    response: Response,
+    response: Response
   ): Promise<void> => {
     try {
       let id = request.params.id;
-      await this.productsService.deleteProduct(id);
+      await this.service.deleteProduct(id);
       response.status(204).json({ message: "Product Deleted!" });
     } catch (e) {
       console.error(e);
@@ -63,18 +66,18 @@ class ProductsController implements IProductsController {
 
   updateProduct = async (
     request: Request,
-    response: Response,
+    response: Response
   ): Promise<void> => {
     try {
       let { id } = request.params;
       let { name, description, price, qtd } = request.body;
 
-      const product = await this.productsService.updateProduct(
+      const product = await this.service.updateProduct(
         id,
         name,
         Number(price),
         Number(qtd),
-        description,
+        description
       );
       response.status(200).json({ message: "Product Updated!", product });
     } catch (e) {

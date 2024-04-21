@@ -1,11 +1,11 @@
-import { Product } from "../model/Product";
-import { DBClient } from "../dataSource/DBClient";
+import { Product } from "../../model/Product";
+import { DBClient } from "../../dataSource/DBClient";
 import {
   deleteProduct,
   getProducts,
   insertProduct,
   updateProduct,
-} from "../dataSource/queries/productsTable";
+} from "../../dataSource/queries/productsTable";
 
 interface IProductsRepository {
   getProducts(): Promise<Product[]>;
@@ -13,7 +13,7 @@ interface IProductsRepository {
     name: string,
     price: number,
     qtd: number,
-    description?: string,
+    description?: string
   ): Promise<Product[]>;
   deleteProduct(id: string): Promise<void>;
   updateProduct(
@@ -21,7 +21,7 @@ interface IProductsRepository {
     name: string,
     price: number,
     qtd: number,
-    description?: string,
+    description?: string
   ): Promise<Product[]>;
 }
 
@@ -34,7 +34,7 @@ class ProductsRepository implements IProductsRepository {
     name: string,
     price: number,
     qtd: number,
-    description?: string,
+    description?: string
   ): Promise<Product[]> => {
     return (
       await DBClient.agent.query(insertProduct, [name, description, price, qtd])
@@ -50,7 +50,7 @@ class ProductsRepository implements IProductsRepository {
     name: string,
     price: number,
     qtd: number,
-    description?: string | undefined,
+    description?: string | undefined
   ): Promise<Product[]> => {
     return (
       await DBClient.agent.query(updateProduct, [

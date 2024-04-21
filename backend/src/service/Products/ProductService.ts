@@ -1,8 +1,8 @@
-import { Product } from "../model/Product";
+import { Product } from "../../model/Product";
 import {
   IProductsRepository,
   ProductsRepository,
-} from "../repository/ProductsRepository";
+} from "../../repository/Products/ProductsRepository";
 
 interface IProductsService {
   getProducts(): Promise<Product[]>;
@@ -10,7 +10,7 @@ interface IProductsService {
     name: string,
     price: number,
     qtd: number,
-    description?: string,
+    description?: string
   ): Promise<Product[]>;
   deleteProduct(id: string): Promise<void>;
   updateProduct(
@@ -18,7 +18,7 @@ interface IProductsService {
     name: string,
     price: number,
     qtd: number,
-    description?: string,
+    description?: string
   ): Promise<Product[]>;
 }
 
@@ -37,7 +37,7 @@ class ProductsService implements IProductsService {
     name: string,
     price: number,
     qtd: number,
-    description?: string | undefined,
+    description?: string | undefined
   ): Promise<Product[]> {
     return this.repository.insertProduct(name, price, qtd, description);
   }
@@ -51,14 +51,14 @@ class ProductsService implements IProductsService {
     name: string,
     price: number,
     qtd: number,
-    description?: string,
+    description?: string
   ): Promise<Product[]> => {
     return await this.repository.updateProduct(
       id,
       name,
       price,
       qtd,
-      description,
+      description
     );
   };
 }
