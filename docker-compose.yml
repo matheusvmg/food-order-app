@@ -52,3 +52,12 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+  food-order-app-dashboard:
+    build:
+      context: ./dashboard
+    container_name: food-order-app-dashboard
+    ports:
+      - 2000:2000
+    volumes:
+      - ./dashboard:/app
+      - /app/node_modules
