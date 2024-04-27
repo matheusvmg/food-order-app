@@ -10,6 +10,8 @@ interface IUserService {
   register(name: string, email: string, password: string): Promise<User>;
   getUserPassword(email: string): Promise<IHashedPassword>;
   getUserByEmail(email: string): Promise<User>;
+  getAllUsers(): Promise<User[]>;
+  deleteUserById(id: string): Promise<void>;
 }
 
 class UserService implements IUserService {
@@ -37,6 +39,14 @@ class UserService implements IUserService {
 
   getUserByEmail = async (email: string): Promise<User> => {
     return await this.repository.getUserByEmail(email);
+  };
+
+  getAllUsers = async (): Promise<User[]> => {
+    return await this.repository.getAllUsers();
+  };
+
+  deleteUserById = async (id: string): Promise<void> => {
+    await this.repository.deleteUserById(id);
   };
 }
 

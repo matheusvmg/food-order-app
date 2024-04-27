@@ -24,6 +24,8 @@ class UserRoutes implements IUserRoutes {
   registerAllRoutes() {
     this.app.post("/register", this.controller.registerUser);
     this.app.post("/login", this.controller.login);
+    this.app.get("/users/all", this.controller.getAllUsers);
+    this.app.delete("/users/:id", this.controller.deleteUserById);
   }
 }
 

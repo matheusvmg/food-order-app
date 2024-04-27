@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, response } from "express";
 import { IUserService, UserService } from "../../service/User/UserService";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -6,6 +6,8 @@ import jwt from "jsonwebtoken";
 interface IUserController {
   registerUser(request: Request, response: Response): Promise<void>;
   login(request: Request, response: Response): Promise<void>;
+  getAllUsers(request: Request, response: Response): Promise<void>;
+  deleteUserById(request: Request, response: Response): Promise<void>;
 }
 
 class UserController implements IUserController {
@@ -56,7 +58,9 @@ class UserController implements IUserController {
       );
 
       if (isPasswordValid) {
-        const token = jwt.sign({ userId: user.user_id }, "secretKey");
+        const token = jwt.sign({ userId: user.user_id }, "secretKey", {
+          expiresIn: "1h",
+        });
         response.status(200).json({ token });
       } else {
         response.status(400).json({ message: "Email or password invalid!" });
@@ -64,6 +68,33 @@ class UserController implements IUserController {
     } catch (e) {
       console.error(e);
       response.status(500).json({ message: "Could not log in the user" });
+    }
+  };
+
+  getAllUsers = async (
+    _request: Request,
+    response: Response
+  ): Promise<void> => {
+    try {
+      const users = await this.service.getAllUsers();
+      response.status(200).json({ users });
+    } catch (e) {
+      console.error(e);
+      response.status(500).json({ message: "Could not get the users" });
+    }
+  };
+
+  deleteUserById = async (
+    request: Request,
+    response: Response
+  ): Promise<void> => {
+    try {
+      const id = request.params.id;
+      await this.service.deleteUserById(id);
+      response.status(204).send();
+    } catch (e) {
+      console.error(e);
+      response.status(500).json({ message: "Could not delete the user" });
     }
   };
 }

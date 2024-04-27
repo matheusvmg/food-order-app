@@ -1,5 +1,7 @@
 import { DBClient } from "../../dataSource/DBClient";
 import {
+  deleteUserById,
+  getAllUsers,
   getUserByEmail,
   getUserPassword,
   isEmailExists,
@@ -16,6 +18,8 @@ interface IUserRepository {
   register(name: string, email: string, password: string): Promise<User>;
   getUserPassword(email: string): Promise<IHashedPassword>;
   getUserByEmail(email: string): Promise<User>;
+  getAllUsers(): Promise<User[]>;
+  deleteUserById(id: string): Promise<void>;
 }
 
 class UserRepository implements IUserRepository {
@@ -38,6 +42,14 @@ class UserRepository implements IUserRepository {
 
   getUserByEmail = async (email: string): Promise<User> => {
     return (await DBClient.agent.query(getUserByEmail, [email])).rows[0];
+  };
+
+  getAllUsers = async (): Promise<User[]> => {
+    return (await DBClient.agent.query(getAllUsers)).rows;
+  };
+
+  deleteUserById = async (id: string): Promise<void> => {
+    await DBClient.agent.query(deleteUserById, [id]);
   };
 }
 
