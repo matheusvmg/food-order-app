@@ -6,6 +6,8 @@ import {
   getUserPassword,
   isEmailExists,
   registerUser,
+  updateUserPasswordByEmail,
+  updateUserResetPasswordTokenByEmail,
 } from "../../dataSource/queries/userTable";
 import { User } from "../../model/User";
 
@@ -20,6 +22,11 @@ interface IUserRepository {
   getUserByEmail(email: string): Promise<User>;
   getAllUsers(): Promise<User[]>;
   deleteUserById(id: string): Promise<void>;
+  updateUserResetTokenByEmail(
+    resetToken: string | null,
+    email: string
+  ): Promise<User>;
+  updateUserPasswordByEmail(password: string, email: string): Promise<User>;
 }
 
 class UserRepository implements IUserRepository {
@@ -50,6 +57,27 @@ class UserRepository implements IUserRepository {
 
   deleteUserById = async (id: string): Promise<void> => {
     await DBClient.agent.query(deleteUserById, [id]);
+  };
+
+  updateUserResetTokenByEmail = async (
+    resetToken: string | null,
+    email: string
+  ): Promise<User> => {
+    return (
+      await DBClient.agent.query(updateUserResetPasswordTokenByEmail, [
+        resetToken,
+        email,
+      ])
+    ).rows[0];
+  };
+
+  updateUserPasswordByEmail = async (
+    password: string,
+    email: string
+  ): Promise<User> => {
+    return (
+      await DBClient.agent.query(updateUserPasswordByEmail, [password, email])
+    ).rows[0];
   };
 }
 

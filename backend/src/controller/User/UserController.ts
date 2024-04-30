@@ -2,12 +2,16 @@ import { Request, Response, response } from "express";
 import { IUserService, UserService } from "../../service/User/UserService";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
+import { sendResetPasswordEmail } from "../../utils/email";
 
 interface IUserController {
   registerUser(request: Request, response: Response): Promise<void>;
   login(request: Request, response: Response): Promise<void>;
   getAllUsers(request: Request, response: Response): Promise<void>;
   deleteUserById(request: Request, response: Response): Promise<void>;
+  resetPassword(request: Request, response: Response): Promise<void>;
+  forgetPassword(request: Request, response: Response): Promise<void>;
 }
 
 class UserController implements IUserController {
@@ -95,6 +99,54 @@ class UserController implements IUserController {
     } catch (e) {
       console.error(e);
       response.status(500).json({ message: "Could not delete the user" });
+    }
+  };
+
+  resetPassword = async (
+    request: Request,
+    response: Response
+  ): Promise<void> => {
+    try {
+      const { email } = request.body;
+      const isRegistered = await this.service.isEmailExists(email);
+      if (!isRegistered) {
+        response.status(404).json({ message: "Email not found" });
+        return;
+      }
+      const token = crypto.randomBytes(20).toString("hex");
+      await this.service.updateUserResetTokenByEmail(token, email);
+      const messageResponse = await sendResetPasswordEmail(email, token);
+
+      if (messageResponse.messageId) {
+        response.status(200).json({
+          message:
+            "Check your email for instructions on resetting your password",
+        });
+      } else {
+        response.status(500).json({ message: "Could not reset the password" });
+      }
+    } catch (e) {
+      console.error(e);
+      response.status(500).json({ message: "Could not reset the password" });
+    }
+  };
+
+  forgetPassword = async (
+    request: Request,
+    response: Response
+  ): Promise<void> => {
+    const { token } = request.params;
+    const { password } = request.body;
+    const users = await this.service.getAllUsers();
+    const user = users.find((u) => u.resettoken === token);
+    if (user) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      await this.service.updateUserPasswordByEmail(hashedPassword, user.email);
+      await this.service.updateUserResetTokenByEmail(null, user.email);
+      response.status(200).json({ message: "Password updated successfully" });
+    } else {
+      response.status(404).json({ message: "Invalid or expired token" });
     }
   };
 }

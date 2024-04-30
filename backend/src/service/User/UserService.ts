@@ -12,6 +12,11 @@ interface IUserService {
   getUserByEmail(email: string): Promise<User>;
   getAllUsers(): Promise<User[]>;
   deleteUserById(id: string): Promise<void>;
+  updateUserResetTokenByEmail(
+    resetToken: string | null,
+    email: string
+  ): Promise<User>;
+  updateUserPasswordByEmail(password: string, email: string): Promise<User>;
 }
 
 class UserService implements IUserService {
@@ -47,6 +52,20 @@ class UserService implements IUserService {
 
   deleteUserById = async (id: string): Promise<void> => {
     await this.repository.deleteUserById(id);
+  };
+
+  updateUserResetTokenByEmail = async (
+    resetToken: string | null,
+    email: string
+  ): Promise<User> => {
+    return this.repository.updateUserResetTokenByEmail(resetToken, email);
+  };
+
+  updateUserPasswordByEmail = async (
+    password: string,
+    email: string
+  ): Promise<User> => {
+    return this.repository.updateUserPasswordByEmail(password, email);
   };
 }
 

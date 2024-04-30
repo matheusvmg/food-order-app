@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS users (
   user_id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
   name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL
+  password VARCHAR(255) NOT NULL,
+  resetToken VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS products (

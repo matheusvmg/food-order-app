@@ -6,12 +6,14 @@ require("dotenv").config({
 });
 
 const client = new Client({
-  // NOTE: Only works locally
-  host: process.env.DATABASE_HOST, // BUG: Fix database host in docker
+  host:
+    process.env.NODE_ENV === "production"
+      ? process.env.DATABASE_HOST
+      : "localhost",
   port: Number(process.env.DATABASE_PORT),
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
-  database: process.env.DATABASE,
+  database: process.env.POSTGRES_DB,
 });
 
 class DBClient {
@@ -21,13 +23,19 @@ class DBClient {
   private constructor() {}
 
   connect = async () => {
-    client
-      .connect()
-      .then(async () => console.log("DB Connected ✅"))
-      .catch(async (e) => {
-        console.error(e);
-        await this.disconnect();
-      });
+    setTimeout(() => {
+      client
+        .connect()
+        .then(async () => {
+          console.log("DB Connected ✅");
+          console.log(process.env);
+        })
+        .catch(async (e) => {
+          console.error(e);
+          console.log(process.env);
+          await this.disconnect();
+        });
+    }, 20000);
   };
 
   disconnect = async () => {
