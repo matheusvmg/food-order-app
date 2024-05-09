@@ -36,12 +36,15 @@ class ProductsController implements IProductsController {
     response: Response
   ): Promise<void> => {
     try {
-      const { name, description, price, qtd } = request.body;
+      const { name, description, price, qtd, category_id, option_id } =
+        request.body;
       const product = await this.service.insertProduct(
         name,
         price,
         qtd,
-        description
+        description,
+        category_id,
+        option_id
       );
       response.status(200).json({ message: "Product inserted!", product });
     } catch (e) {
@@ -70,14 +73,17 @@ class ProductsController implements IProductsController {
   ): Promise<void> => {
     try {
       let { id } = request.params;
-      let { name, description, price, qtd } = request.body;
+      let { name, description, price, qtd, category_id, option_id } =
+        request.body;
 
       const product = await this.service.updateProduct(
         id,
         name,
         Number(price),
         Number(qtd),
-        description
+        description,
+        category_id,
+        option_id
       );
       response.status(200).json({ message: "Product Updated!", product });
     } catch (e) {
