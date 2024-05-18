@@ -1,11 +1,13 @@
+import { ThemeProvider } from "styled-components";
 import "./App.css";
-import { HomePage } from "./pages/Home";
+import { LoginPage } from "./pages/Login";
+import { theme } from "./theme/theme";
 
 function App() {
   return (
-    <>
-      <HomePage />
-    </>
+    <ThemeProvider theme={theme}>
+      <LoginPage />
+    </ThemeProvider>
   );
 }
 
