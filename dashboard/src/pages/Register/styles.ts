@@ -49,7 +49,7 @@ export const Fields = styled.div`
   `};
 `;
 
-export const SignUpLinkContainer = styled.div`
+export const LoginLinkContainer = styled.div`
   ${() => css`
     display: flex;
     flex-direction: row;
@@ -59,7 +59,7 @@ export const SignUpLinkContainer = styled.div`
   `};
 `;
 
-export const SignUpLink = styled.a`
+export const LoginLink = styled.a`
   ${({ theme }) => css`
     text-decoration-color: ${theme.colors.darkestGreen};
   `};

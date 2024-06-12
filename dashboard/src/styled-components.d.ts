@@ -10,6 +10,19 @@ declare module "styled-components" {
       militaryGreen: string;
       darkGreen: string;
       darkestGreen: string;
+      black: string;
+    };
+    border: {
+      radius: {
+        xxxs: number;
+        xxs: number;
+        xs: number;
+        sm: number;
+        lg: number;
+        xl: number;
+        xxl: number;
+        xxxl: number;
+      };
     };
     font: {
       size: {
@@ -22,6 +35,26 @@ declare module "styled-components" {
         xxl: number;
         xxxl: number;
       };
+    };
+    height: {
+      xxxs: number;
+      xxs: number;
+      xs: number;
+      sm: number;
+      lg: number;
+      xl: number;
+      xxl: number;
+      xxxl: number;
+    };
+    width: {
+      xxxs: number;
+      xxs: number;
+      xs: number;
+      sm: number;
+      lg: number;
+      xl: number;
+      xxl: number;
+      xxxl: number;
     };
     spacing: {
       margin: {

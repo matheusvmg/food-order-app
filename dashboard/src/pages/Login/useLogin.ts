@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { api } from "../../service/api";
+import { api } from "@service/api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
