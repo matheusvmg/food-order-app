@@ -13,7 +13,9 @@ interface IProductsRepository {
     name: string,
     price: number,
     qtd: number,
-    description?: string
+    description?: string,
+    category_id?: string,
+    option_id?: string
   ): Promise<Product[]>;
   deleteProduct(id: string): Promise<void>;
   updateProduct(
@@ -21,7 +23,9 @@ interface IProductsRepository {
     name: string,
     price: number,
     qtd: number,
-    description?: string
+    description?: string,
+    category_id?: string,
+    option_id?: string
   ): Promise<Product[]>;
 }
 
@@ -34,10 +38,19 @@ class ProductsRepository implements IProductsRepository {
     name: string,
     price: number,
     qtd: number,
-    description?: string
+    description?: string,
+    category_id?: string,
+    option_id?: string
   ): Promise<Product[]> => {
     return (
-      await DBClient.agent.query(insertProduct, [name, description, price, qtd])
+      await DBClient.agent.query(insertProduct, [
+        name,
+        description,
+        price,
+        qtd,
+        category_id,
+        option_id,
+      ])
     ).rows;
   };
 
@@ -50,7 +63,9 @@ class ProductsRepository implements IProductsRepository {
     name: string,
     price: number,
     qtd: number,
-    description?: string | undefined
+    description?: string | undefined,
+    category_id?: string,
+    option_id?: string
   ): Promise<Product[]> => {
     return (
       await DBClient.agent.query(updateProduct, [
@@ -58,6 +73,8 @@ class ProductsRepository implements IProductsRepository {
         description,
         price,
         qtd,
+        category_id,
+        option_id,
         id,
       ])
     ).rows;

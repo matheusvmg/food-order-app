@@ -1,79 +1,80 @@
-import { Typography, Flex, Form, Button } from "antd";
-import { useLogin } from "./useLogin";
-import { TextField } from "../../components/TextField";
 import * as S from "./styles";
-
-const { Title, Text } = Typography;
+import carrouselImage from "@assets/dashboard_carrousel_1.svg";
+import { Text } from "@components/Text";
+import { TextField } from "@components/TextField";
+import { useLogin } from "./useLogin";
+import { Button } from "@components/Button";
+import { loginLocales } from "./loginLocales";
 
 const LoginPage = () => {
-  const {
-    handleSubmit,
-    onSubmit,
-    control,
-    errors,
-    isLoading,
-    isLoginServiceFailed,
-  } = useLogin();
+  const { control, onSubmit, handleSubmit } = useLogin();
 
   return (
     <S.Container>
-      <S.Background />
-      <Flex vertical justify="center" align="center" style={{ width: "50vw" }}>
-        <Title style={{ margin: 16 }}>Bem vindo(a) ao Food Order</Title>
-        <Form onFinish={handleSubmit(onSubmit)} style={{ width: "70%" }}>
-          <TextField
-            name={"email"}
-            type="email"
-            control={control}
-            rules={{ required: "O email é obrigatório" }}
-            props={{ size: "large" }}
-            placeholder="teste@teste.com"
-            marginTop={8}
-            marginBottom={8}
+      <S.Carrousel>
+        <Text
+          text={loginLocales.title}
+          fontWeight="bold"
+          fontSize="lg"
+          color="white"
+          textAlign="center"
+        />
+        <S.Image src={carrouselImage} />
+      </S.Carrousel>
+      <S.Fields>
+        <Text
+          text={loginLocales.subtitle}
+          fontWeight="bold"
+          fontSize="xl"
+          color="black"
+        />
+        <Text
+          text={loginLocales.description}
+          fontWeight="light"
+          fontSize="xs"
+          color="black"
+          marginTop="lg"
+        />
+        <TextField
+          name="email"
+          control={control}
+          marginTop="xxxl"
+          background="lightGray"
+          placeholder={loginLocales.emailTextField.placeholder}
+        />
+        <TextField
+          name="password"
+          type="password"
+          control={control}
+          marginTop="sm"
+          background="lightGray"
+          placeholder={loginLocales.passwordTextField.placeholder}
+        />
+        <Button
+          text={loginLocales.buttonTitle}
+          marginTop="xxxl"
+          onClick={handleSubmit(onSubmit)}
+        />
+        <S.SignUpLinkContainer>
+          <Text
+            text={loginLocales.signUp.text}
+            fontSize="xs"
+            fontWeight="extraLight"
+            color="black"
+            marginTop="sm"
           />
-          <Text
-            type="danger"
-            style={{ display: errors.email ? "flex" : "none" }}
-          >
-            {errors?.email?.message}
-          </Text>
-          <TextField
-            name={"password"}
-            type="password"
-            control={control}
-            rules={{ required: "A senha é obrigatória" }}
-            props={{ size: "large" }}
-            placeholder="Digite sua melhor senha"
-            marginTop={8}
-            marginBottom={8}
-          />
-          <Text
-            type="danger"
-            style={{ display: errors.password ? "flex" : "none" }}
-          >
-            {errors?.password?.message}
-          </Text>
-          <Button
-            type="primary"
-            htmlType="submit"
-            size="large"
-            style={{ marginTop: 8 }}
-            shape="round"
-            loading={isLoading}
-          >
-            Cadastrar
-          </Button>
-          <Text
-            type="danger"
-            style={{
-              display: isLoginServiceFailed ? "flex" : "none",
-              marginTop: 8,
-            }}
-          >
-            Erro ao fazer o login!
-          </Text>
-        </Form>
-      </Flex>
+          <S.SignUpLink href="/register">
+            <Text
+              text={loginLocales.signUp.linkText}
+              fontSize="xs"
+              fontWeight="bold"
+              color="darkestGreen"
+              marginTop="sm"
+              marginleft="xxxs"
+            />
+          </S.SignUpLink>
+        </S.SignUpLinkContainer>
+      </S.Fields>
     </S.Container>
   );
 };

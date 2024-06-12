@@ -10,7 +10,9 @@ interface IProductsService {
     name: string,
     price: number,
     qtd: number,
-    description?: string
+    description?: string,
+    category_id?: string,
+    option_id?: string
   ): Promise<Product[]>;
   deleteProduct(id: string): Promise<void>;
   updateProduct(
@@ -18,7 +20,9 @@ interface IProductsService {
     name: string,
     price: number,
     qtd: number,
-    description?: string
+    description?: string,
+    category_id?: string,
+    option_id?: string
   ): Promise<Product[]>;
 }
 
@@ -37,9 +41,18 @@ class ProductsService implements IProductsService {
     name: string,
     price: number,
     qtd: number,
-    description?: string | undefined
+    description?: string,
+    category_id?: string,
+    option_id?: string
   ): Promise<Product[]> {
-    return this.repository.insertProduct(name, price, qtd, description);
+    return this.repository.insertProduct(
+      name,
+      price,
+      qtd,
+      description,
+      category_id,
+      option_id
+    );
   }
 
   deleteProduct = async (id: string): Promise<void> => {
@@ -51,14 +64,18 @@ class ProductsService implements IProductsService {
     name: string,
     price: number,
     qtd: number,
-    description?: string
+    description?: string,
+    category_id?: string,
+    option_id?: string
   ): Promise<Product[]> => {
     return await this.repository.updateProduct(
       id,
       name,
       price,
       qtd,
-      description
+      description,
+      category_id,
+      option_id
     );
   };
 }

@@ -6,7 +6,7 @@
     "docker:clean": "docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q)",
     "docker:up": "docker-compose -f docker-compose.yml up -d",
     "docker:clean:volumes": "docker-compose down --volumes",
-    "docker:clean:up": "yarn docker:clean && yarn docker:up"
+    "docker:clean:up": "rm -rf ./backend/data && yarn docker:clean && yarn docker:up"
   },
   "license": "MIT"
 }
