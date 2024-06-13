@@ -1,5 +1,6 @@
 FROM node
 WORKDIR /usr/src/app
 COPY package*.json .
-RUN yarn
+RUN yarn cache clean
+RUN yarn install
 COPY . .
