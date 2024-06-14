@@ -3,8 +3,12 @@ name: Dashboard preview Website
 on:
   push:
     branches: ["main"]
+    paths:
+      - "dashboard/**"
   pull_request:
     branches: ["main"]
+    paths:
+      - "dashboard/**"
 
 jobs:
   build:
