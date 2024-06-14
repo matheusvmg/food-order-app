@@ -1,6 +1,7 @@
 name: Dashboard preview Website
 
 on:
+  workflow_dispatch: {}
   push:
     branches:
       - main
