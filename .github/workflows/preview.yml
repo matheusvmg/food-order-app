@@ -2,13 +2,15 @@ name: Dashboard preview Website
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
     paths:
-      - "dashboard/**"
+      - 'dashboard/**'
   pull_request:
-    branches: ["main"]
+    branches:
+      - main
     paths:
-      - "dashboard/**"
+      - 'dashboard/**'
 
 jobs:
   build:
@@ -21,7 +23,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "21.7.1"
+          node-version: '21.7.1'
 
       - name: Install dependencies
         run: npm install
