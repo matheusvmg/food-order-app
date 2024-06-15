@@ -44,11 +44,3 @@ services:
       - food-order-app-postgres
     ports:
       - 5001:5001
-  food-order-app-dashboard:
-    build:
-      context: ./dashboard
-    container_name: food-order-app-dashboard
-    restart: on-failure
-    command: yarn start
-    ports:
-      - 3000:3000
