@@ -1,17 +1,9 @@
 name: Dashboard preview Website
 
 on:
-  workflow_dispatch: {}
-  push:
-    branches:
-      - main
-    paths:
-      - 'dashboard/**'
   pull_request:
     branches:
       - main
-    paths:
-      - 'dashboard/**'
 
 jobs:
   build:
@@ -24,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '21.7.1'
+          node-version: "21.7.1"
 
       - uses: bahmutov/npm-install@v1
         with:
