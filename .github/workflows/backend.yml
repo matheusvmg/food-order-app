@@ -1,4 +1,4 @@
-name: Dashboard preview Website
+name: Backend workflow
 
 on: pull_request
 
@@ -17,29 +17,11 @@ jobs:
 
       - uses: bahmutov/npm-install@v1
         with:
-          working-directory: dashboard
-
-      - name: Run lint
-        run: npm run lint
-        working-directory: dashboard
+          working-directory: backend
 
       - name: Run tests
         run: npm run test
-        working-directory: dashboard
-
-      - name: Build app
-        run: npm run build
-        working-directory: dashboard
-
-      - name: Upload to S3
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --acl public-read
-        env:
-          SOURCE_DIR: dashboard/dist
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        working-directory: backend
 
       - name: Notify discord server
         uses: sarisia/actions-status-discord@v1
@@ -50,7 +32,7 @@ jobs:
           content: "Hey <@550123760703766548>"
           title: ${{ github.workflow }}
           description: |
-            Click [here](http://food-order-app-preview.s3-website-us-east-1.amazonaws.com) to go to the preview page!
+            Click [here](https://github.com/matheusvmg/food-order-app/actions) to see the workflow!
           color: 0x0000ff
           url: "https://github.com/matheusvmg/food-order-app"
           username: GitHub Actions
