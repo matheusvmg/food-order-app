@@ -7,7 +7,7 @@
     "start:dev": "cross-env NODE_ENV=localhost npx nodemon",
     "build": "rimraf ./build && tsc",
     "start": "cross-env NODE_ENV=production && npm run build && node build/src/index.js",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
