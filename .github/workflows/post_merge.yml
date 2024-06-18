@@ -10,13 +10,11 @@ jobs:
 
     steps:
       - name: Remove from S3
-        uses: vitorsgomes/s3-rm-action@master
+        uses: aitorres/aws-s3-delete-bucket@v1.2.1
         with:
-          args: --recursive
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          bucket-name: ${{ secrets.AWS_S3_BUCKET }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Notify discord server
         uses: sarisia/actions-status-discord@v1
