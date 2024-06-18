@@ -1,0 +1,33 @@
+name: Delete Preview from S3
+
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+  remove:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Remove from S3
+        uses: vitorsgomes/s3-rm-action@master
+        with:
+          args: --recursive
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Notify discord server
+        uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_ACTIONS_WEBHOOK }}
+          status: ${{ job.status }}
+          content: "Hey <@550123760703766548>"
+          title: ${{ github.workflow }}
+          description: |
+            Click [here](https://github.com/matheusvmg/food-order-app/actions) to see the workflow!
+          color: 0x0000ff
+          url: "https://github.com/matheusvmg/food-order-app"
+          username: GitHub Actions
