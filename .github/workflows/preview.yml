@@ -34,9 +34,11 @@ jobs:
       - name: Create bucket in S3
         uses: aitorres/aws-s3-create-bucket@v1.2.0
         with:
-          bucket-name: ${{ secrets.AWS_S3_BUCKET }}
+          bucket-name: "food-order-app-preview"
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: "us-east-1"
+          acl: "private"
 
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
@@ -44,7 +46,7 @@ jobs:
           args: --acl public-read
         env:
           SOURCE_DIR: dashboard/dist
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_S3_BUCKET: "food-order-app-preview"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
