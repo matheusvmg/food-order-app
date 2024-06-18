@@ -28,4 +28,4 @@ jobs:
             Click [here](https://github.com/matheusvmg/food-order-app/actions) to see the workflow!
           color: 0x0000ff
           url: "https://github.com/matheusvmg/food-order-app"
-          username: GitHub Actions
+          username: Pipeline Notifier

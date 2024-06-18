@@ -31,6 +31,13 @@ jobs:
         run: npm run build
         working-directory: dashboard
 
+      - name: Create bucket in S3
+        uses: aitorres/aws-s3-create-bucket@v1.2.0
+        with:
+          bucket-name: ${{ secrets.AWS_S3_BUCKET }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
         with:
@@ -53,4 +60,4 @@ jobs:
             Click [here](http://food-order-app-preview.s3-website-us-east-1.amazonaws.com) to go to the preview page!
           color: 0x0000ff
           url: "https://github.com/matheusvmg/food-order-app"
-          username: GitHub Actions
+          username: Pipeline Notifier
