@@ -301,7 +301,7 @@ describe("UserRepository", () => {
       ]);
     });
 
-    test("Should return undefined when does not pass a valid resetToken and email to updateUserResetTokenByEmail method", async () => {
+    test("Should return undefined when does not pass a valid password and email to updateUserPasswordByEmail method", async () => {
       const queryFn = jest.fn().mockImplementation(() => {
         return { rows: [] };
       });
