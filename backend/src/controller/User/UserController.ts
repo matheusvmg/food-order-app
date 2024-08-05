@@ -1,4 +1,4 @@
-import { Request, Response, response } from "express";
+import { Request, Response } from "express";
 import { IUserService, UserService } from "../../service/User/UserService";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
